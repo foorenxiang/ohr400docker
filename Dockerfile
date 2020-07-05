@@ -67,6 +67,7 @@ COPY --chown=foorx ./assets/ /home/foorx/
 
 # clone OHR400 repo
 RUN cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
+RUN mv ~/flat ~/Sites/OHR400Dashboard/
 CMD cd ~/Sites/OHR400Dashboard && git pull
 
 # ENTRYPOINT ["/entrypoint.sh"]
