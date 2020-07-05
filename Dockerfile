@@ -1,4 +1,5 @@
 # http://www.science.smith.edu/dftwiki/index.php/Tutorial:_Docker_Anaconda_Python_--_4#towardsDataScience:_Not_Reinventing_the_Wheel
+# https://github.com/nodejs/docker-node/issues/740
 # Declare the anaconda linux base image
 FROM ubuntu:18.04
 
@@ -59,14 +60,13 @@ RUN conda install -c kx embedpy
 RUN conda install -c kx jupyterq 
 ENV PATH=$PATH:/home/foorx/anaconda3/q/l64
 ENV QHOME=/home/foorx/anaconda3/q
-COPY ./assets/kc.lic /home/foorx/anaconda3/q/kc.lic
+COPY --chown=foorx ./assets/kc.lic /home/foorx/anaconda3/q/kc.lic
 
 # copy assets
-COPY ./assets/ /home/foorx/
+COPY --chown=foorx ./assets/ /home/foorx/
 
-# RUN cd /home/foorx/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
-# RUN cd /home/foorx/Sites/OHR400Dashboard && git pull
-
-# COPY ./dockermountUbuntu /home/foorx/
+# clone OHR400 repo
+RUN cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
+CMD cd ~/Sites/OHR400Dashboard && git pull
 
 # ENTRYPOINT ["/entrypoint.sh"]
