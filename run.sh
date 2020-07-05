@@ -1,1 +1,1 @@
-docker start -ai ohr400backendCPUInstance
+docker start -ai ohr400backendGPUInstance

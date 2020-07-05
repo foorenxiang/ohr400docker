@@ -1,7 +1,7 @@
 # http://www.science.smith.edu/dftwiki/index.php/Tutorial:_Docker_Anaconda_Python_--_4#towardsDataScience:_Not_Reinventing_the_Wheel
 # https://github.com/nodejs/docker-node/issues/740
 # Declare the anaconda linux base image
-FROM ubuntu:18.04
+FROM nvidia/cuda:latest
 
 # expose ports
 EXPOSE  5001
@@ -98,3 +98,5 @@ RUN mv ~/ml ~/anaconda3/q/ \
 COPY --chown=foorx ./entrypoint.sh ~/entrypoint.sh
 
 ENTRYPOINT ["~/entrypoint.sh"]
+
+RUN echo "nvidia-smi" >> /home/foorx/.bashrc
