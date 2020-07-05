@@ -70,4 +70,7 @@ RUN cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
 RUN mv ~/flat ~/Sites/OHR400Dashboard/
 CMD cd ~/Sites/OHR400Dashboard && git pull
 
+# create logs folder
+RUN mkdir ~/logs
+
 # ENTRYPOINT ["/entrypoint.sh"]
