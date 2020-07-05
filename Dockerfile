@@ -1,3 +1,4 @@
+# http://www.science.smith.edu/dftwiki/index.php/Tutorial:_Docker_Anaconda_Python_--_4#towardsDataScience:_Not_Reinventing_the_Wheel
 # Declare the anaconda linux base image
 FROM ubuntu:18.04
 
@@ -9,67 +10,61 @@ EXPOSE  80
 EXPOSE	3000
 EXPOSE	3001
 EXPOSE	5000
+EXPOSE	8888
 
 # run any installs required
 RUN export DEBIAN_FRONTEND=noninteractive
-RUN apt-get update
+RUN apt-get update && yes|apt-get upgrade
 RUN apt-get -y install apt-utils
 RUN apt-get -y install rlwrap
-RUN apt-get -y install iputils-ping
 RUN apt-get -y install git
 RUN apt-get -y install wget
 RUN apt-get -y install curl
+RUN apt-get -y install bzip2
+RUN apt-get -y install sudo
+RUN apt-get install -y wget && rm -rf /var/lib/apt/lists/*
 
-# install conda
-# ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-
-# ENV PATH /opt/conda/bin:$PATH
-# # ENV PATH /home/foorx/conda/bin:$PATH
-
-# RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificates \
-#     libglib2.0-0 libxext6 libsm6 libxrender1 \
-#     git mercurial subversion
-
-# RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda2-4.5.11-Linux-x86_64.sh -O ~/miniconda.sh && \
-#     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
-#     rm ~/miniconda.sh && \
-#     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
-#     echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-#     echo "conda activate base" >> ~/.bashrc
-
-# RUN apt-get install -y curl grep sed dpkg && \
-#     TINI_VERSION=`curl https://github.com/krallin/tini/releases/latest | grep -o "/v.*\"" | sed 's:^..\(.*\).$:\1:'` && \
-#     curl -L "https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini_${TINI_VERSION}.deb" > tini.deb && \
-#     dpkg -i tini.deb && \
-#     rm tini.deb && \
-#     apt-get clean
-
-
-# COPY ./miniconda.sh /home/foorx/miniconda.sh
-RUN mkdir /home/foorx
-RUN chown -R 999:999 /home/foorx
-
-# create new user foorx
-RUN groupadd -r mygrp && useradd -r -g mygrp foorx
-
-# set to user foorx
+# create and set to user foorx
+RUN adduser --disabled-password --gecos '' foorx
+RUN adduser foorx sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER foorx
 
 # set working directory of user foorx
 WORKDIR /home/foorx
+RUN chmod a+rwx /home/foorx
 
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /home/foorx/miniconda.sh
-RUN bash /home/foorx/miniconda.sh -b -p ~/miniconda
+# install Anaconda3
+RUN wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
+RUN bash Anaconda3-2020.02-Linux-x86_64.sh -b
+RUN rm -f Anaconda3-2020.02-Linux-x86_64.sh
+
+# Set path to conda
+ENV PATH /home/foorx/anaconda3/bin:$PATH
+
+# Updating Anaconda packages
+RUN conda update conda
+RUN conda update anaconda
+RUN conda update --all
+
+# Configuring access to Jupyter
+RUN mkdir /home/foorx/notebooks
+RUN jupyter notebook --generate-config --allow-root
+RUN echo "c.NotebookApp.password = u'sha1:6a3f528eec40:6e896b6e4828f525a6e20e5411cd1c8075d68619'" >> /home/foorx/.jupyter/jupyter_notebook_config.py
+
+# install kdb!
+RUN conda install -c kx kdb 
+RUN conda install -c kx embedpy 
+RUN conda install -c kx jupyterq 
+ENV PATH=$PATH:/home/foorx/anaconda3/q/l64
+ENV QHOME=/home/foorx/anaconda3/q
+COPY ./assets/kc.lic /home/foorx/anaconda3/q/kc.lic
 
 # RUN cd /home/foorx/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
 # RUN cd /home/foorx/Sites/OHR400Dashboard && git pull
 
 #64bit q QHOME
-ENV PATH=$PATH:/home/foorx/l64/l64
-ENV QHOME=/home/foorx/l64
 # ENV q="rlwrap /home/foorx/l64/l64/q"
-
-# RUN conda install -c kx kdb 
 
 # COPY ./dockermountUbuntu /home/foorx/
 
