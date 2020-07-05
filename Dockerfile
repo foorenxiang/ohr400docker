@@ -14,15 +14,16 @@ EXPOSE	8888
 
 # run any installs required
 RUN export DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && yes|apt-get upgrade
-RUN apt-get -y install apt-utils
-RUN apt-get -y install rlwrap
-RUN apt-get -y install git
-RUN apt-get -y install wget
-RUN apt-get -y install curl
-RUN apt-get -y install bzip2
-RUN apt-get -y install sudo
-RUN apt-get install -y wget && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && yes|apt-get upgrade \
+	&& apt-get -y install apt-utils \
+	&& apt-get -y install rlwrap \
+	&& apt-get -y install git \
+	&& apt-get -y install wget \
+	&& apt-get -y install curl \
+	&& apt-get -y install bzip2 \
+	&& apt-get -y install sudo \
+	&& apt-get install -y wget \
+	&& rm -rf /var/lib/apt/lists/*
 
 # create and set to user foorx
 RUN adduser --disabled-password --gecos '' foorx
@@ -35,9 +36,9 @@ WORKDIR /home/foorx
 RUN chmod a+rwx /home/foorx
 
 # install Anaconda3
-RUN wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
-RUN bash Anaconda3-2020.02-Linux-x86_64.sh -b
-RUN rm -f Anaconda3-2020.02-Linux-x86_64.sh
+RUN wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh \
+	&& bash Anaconda3-2020.02-Linux-x86_64.sh -b \
+	&& rm -f Anaconda3-2020.02-Linux-x86_64.sh
 
 # Set path to conda
 ENV PATH /home/foorx/anaconda3/bin:$PATH
@@ -60,12 +61,11 @@ ENV PATH=$PATH:/home/foorx/anaconda3/q/l64
 ENV QHOME=/home/foorx/anaconda3/q
 COPY ./assets/kc.lic /home/foorx/anaconda3/q/kc.lic
 
+
 # RUN cd /home/foorx/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
 # RUN cd /home/foorx/Sites/OHR400Dashboard && git pull
-
-#64bit q QHOME
-# ENV q="rlwrap /home/foorx/l64/l64/q"
 
 # COPY ./dockermountUbuntu /home/foorx/
 
 # ENTRYPOINT ["/entrypoint.sh"]
+RUN echo "nvidia-smi" >> /home/foorx/.bashrc
