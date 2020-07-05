@@ -68,4 +68,3 @@ COPY ./assets/kc.lic /home/foorx/anaconda3/q/kc.lic
 # COPY ./dockermountUbuntu /home/foorx/
 
 # ENTRYPOINT ["/entrypoint.sh"]
-RUN echo "nvidia-smi" >> /home/foorx/.bashrc
