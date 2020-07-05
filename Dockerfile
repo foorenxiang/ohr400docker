@@ -61,6 +61,9 @@ ENV PATH=$PATH:/home/foorx/anaconda3/q/l64
 ENV QHOME=/home/foorx/anaconda3/q
 COPY ./assets/kc.lic /home/foorx/anaconda3/q/kc.lic
 
+# copy assets
+COPY ./assets/ /home/foorx/
+
 
 # RUN cd /home/foorx/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
 # RUN cd /home/foorx/Sites/OHR400Dashboard && git pull
