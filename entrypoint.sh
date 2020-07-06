@@ -10,5 +10,12 @@ echo "Welcome to KDB+ on Docker"
 # install any updated python dependencies defined in OHR400Dashboard Repo
 python3 -m pip install -r ~/Sites/OHR400Dashboard/requirements.txt
 
+rm -r ~/Sites/OHR400Dashboard/flat ; mv ~/flat ~/Sites/OHR400Dashboard/
+cd ~/Sites/OHR400Dashboard && git pull
+
+echo "\nFAS Scripts:\n"
+ls | grep .q | grep FAS
+echo ""
+
 echo $#
 exec "$@"
