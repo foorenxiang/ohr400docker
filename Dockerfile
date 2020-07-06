@@ -69,7 +69,7 @@ COPY --chown=foorx ./assets/ /home/foorx/
 RUN mv ~/ml ~/anaconda3/q/
 
 # clone OHR400 repo
-# RUN cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
+RUN cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
 
 # install python requirements
 RUN python3 -m pip install -r ~/requirements.txt && rm ~/requirements.txt
