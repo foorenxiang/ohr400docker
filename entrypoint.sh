@@ -23,6 +23,17 @@ python3 -m pip install -r ~/Sites/OHR400Dashboard/requirements.txt
 
 echo "Welcome to KDB+ on Docker"
 
+# install kx developer
+# cd
+# sudo apt update
+# sudo apt install -y unzip
+# unzip ~/developer.zip
+# rm ~/developer.zip
+# mv developer-1.3.1-linux developer
+
+
+echo "Welcome to KDB+ on Docker"
+
 echo "\nFAS Scripts:\n"
 ls | grep .q | grep FAS
 echo ""
