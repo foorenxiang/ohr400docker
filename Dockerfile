@@ -63,6 +63,10 @@ ENV PATH=$PATH:/home/foorx/anaconda3/q/l64
 ENV QHOME=/home/foorx/anaconda3/q
 COPY --chown=foorx ./assets/kc.lic /home/foorx/anaconda3/q/kc.lic
 
+# install python requirements
+COPY --chown=foorx ./assets/requirements.txt /home/foorx/requirements.txt
+RUN python3 -m pip install -r ~/requirements.txt && rm ~/requirements.txt
+
 # copy assets
 COPY --chown=foorx ./assets/ /home/foorx/
 
@@ -70,9 +74,6 @@ RUN mv ~/ml ~/anaconda3/q/
 
 # clone OHR400 repo
 # RUN cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
-
-# install python requirements
-RUN python3 -m pip install -r ~/requirements.txt && rm ~/requirements.txt
 
 # create logs folder
 RUN mkdir ~/logs \
