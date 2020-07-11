@@ -20,13 +20,20 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get -y install rlwrap \
 	&& apt-get -y install git \
 	&& apt-get -y install wget \
-	&& apt-get -y install curl \
 	&& apt-get -y install bzip2 \
 	&& apt-get -y install sudo \
 	&& apt-get install -y wget \
+	&& apt-get install -y curl \
 	&& rm -rf /var/lib/apt/lists/* \
-#-----#
-# create and set to user foorx
+	&& wget https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh -O LFSInstall.sh \
+	&& export DEBIAN_FRONTEND=noninteractive \
+	&& apt-get update && yes|apt-get upgrade \
+	&& apt-get install -y gnupg \
+	&& bash ./LFSInstall.sh \
+	&& apt-get install git-lfs \
+	&& git lfs install \
+	#-----#
+	# create and set to user foorx
 	&& adduser --disabled-password --gecos '' foorx \
 	&& adduser foorx sudo \
 	&& echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -35,8 +42,8 @@ USER foorx
 # set working directory of user foorx
 WORKDIR /home/foorx
 RUN chmod a+rwx /home/foorx \
-#-----#
-# install Anaconda3
+	#-----#
+	# install Anaconda3
 	&& wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh \
 	&& bash Anaconda3-2020.02-Linux-x86_64.sh -b \
 	&& rm -f Anaconda3-2020.02-Linux-x86_64.sh
@@ -48,13 +55,13 @@ ENV PATH /home/foorx/anaconda3/bin:$PATH
 RUN conda update conda \
 	&& conda update anaconda \
 	&& conda update --all \
-#-----#
-# Configuring access to Jupyter
+	#-----#
+	# Configuring access to Jupyter
 	&& mkdir /home/foorx/notebooks \
 	&& jupyter notebook --generate-config --allow-root \
 	&& echo "c.NotebookApp.password = u'sha1:6a3f528eec40:6e896b6e4828f525a6e20e5411cd1c8075d68619'" >> /home/foorx/.jupyter/jupyter_notebook_config.py \
-#-----#
-# install kdb!
+	#-----#
+	# install kdb!
 	&& conda install -c kx kdb \
 	&& conda install -c kx embedpy \
 	&& conda install -c kx jupyterq 
