@@ -22,8 +22,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get -y install wget \
 	&& apt-get -y install bzip2 \
 	&& apt-get -y install sudo \
-	&& apt-get install -y wget \
-	&& apt-get install -y curl \
+	&& apt-get -y install wget \
+	&& apt-get -y install curl \
+	&& apt-get -y install vim \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& wget https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh -O LFSInstall.sh \
 	&& export DEBIAN_FRONTEND=noninteractive \
@@ -80,11 +81,13 @@ COPY --chown=foorx ./assets/ /home/foorx/
 RUN mv ~/ml ~/anaconda3/q/
 
 # clone OHR400 repo
-RUN cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard
-
-# create logs folder
-RUN mkdir ~/logs \
-	&& echo "cd ~/Sites/OHR400Dashboard" >> /home/foorx/.bashrc
+RUN cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard \
+	# create logs folder
+	&& mkdir ~/logs \
+	&& echo "cd ~/Sites/OHR400Dashboard" >> /home/foorx/.bashrc \
+	#-----#
+	# Set vim as editor
+	&& echo "export EDITOR=vim" >> /home/foorx/.bashrc
 
 COPY --chown=foorx ./entrypoint.sh ~/entrypoint.sh
 
