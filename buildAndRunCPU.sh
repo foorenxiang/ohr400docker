@@ -1,6 +1,6 @@
 docker build --tag foorenxiang/ohr400backendcpu . \
 && docker container prune -f \
-&& docker run -ti --name ohr400backendCPUInstance --rm \
+&& docker run -ti --name ohr400backendCPUInstance \
  -p 81:80 \
  -p 3000:3000 \
  -p 5001:5001 \
