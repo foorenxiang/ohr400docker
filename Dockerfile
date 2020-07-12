@@ -78,16 +78,20 @@ RUN python3 -m pip install -r ~/requirements.txt && rm ~/requirements.txt
 # copy assets
 COPY --chown=foorx ./assets/ /home/foorx/
 
-RUN mv ~/ml ~/anaconda3/q/
-
-# clone OHR400 repo
-RUN cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard \
+RUN mv ~/ml ~/anaconda3/q/ \
+	# clone OHR400 repo
+	&& cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard \
 	# create logs folder
 	&& mkdir ~/logs \
 	&& echo "cd ~/Sites/OHR400Dashboard" >> /home/foorx/.bashrc \
 	#-----#
 	# Set vim as editor
-	&& echo "export EDITOR=vim" >> /home/foorx/.bashrc
+	&& echo "export EDITOR=vim" >> /home/foorx/.bashrc \
+	# double check order of pip install and git pull if something goes wrong in production branch
+	&& git config --global user.email "foorenxiang@gmail.com" \
+	&& git config --global user.name "foorenxiang" \
+	&& git lfs install
+
 
 COPY --chown=foorx ./entrypoint.sh ~/entrypoint.sh
 
