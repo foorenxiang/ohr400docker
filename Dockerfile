@@ -80,7 +80,7 @@ COPY --chown=foorx ./assets/ /home/foorx/
 
 RUN mv ~/ml ~/anaconda3/q/ \
 	# clone OHR400 repo
-	&& cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard \
+	# && cd ~/Sites && git clone https://github.com/foorenxiang/OHR400Dashboard \
 	# create logs folder
 	&& mkdir ~/logs \
 	&& echo "cd ~/Sites/OHR400Dashboard" >> /home/foorx/.bashrc \

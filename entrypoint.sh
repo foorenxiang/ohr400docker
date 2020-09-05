@@ -8,6 +8,15 @@
 
 cd ~/Sites/OHR400Dashboard && git pull
 
+# install azure cli
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+# install machine learning extension for azure cli
+az extension add -n azure-cli-ml
+
+# verify machine learning extension is installed correctly 
+az ml -h
+
 # install any updated python dependencies defined in OHR400Dashboard Repo
 python3 -m pip install -r ~/Sites/OHR400Dashboard/requirements.txt
 
@@ -51,3 +60,6 @@ echo ""
 
 echo $#
 exec "$@"
+
+echo "Sign in to Azure CLI"
+az login
