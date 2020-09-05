@@ -60,3 +60,6 @@ echo ""
 
 echo $#
 exec "$@"
+
+echo "Sign in to Azure CLI"
+az login
