@@ -17,7 +17,7 @@ docker build --tag foorenxiang/ohr400backendcpu . \
  -p 5001:5001 \
  -p 6001:6001 \
  -p 6002:6002 \
- --volume ~/docker/OHR400Dashboard:/home/foorx/Sites/OHR400Dashboard \
+ --volume ~/code/OHR400Dashboard:/home/foorx/Sites/OHR400Dashboard \
  foorenxiang/ohr400backendcpu bash
 
  # docker exec -ti ohr400backendCPUInstance bash
