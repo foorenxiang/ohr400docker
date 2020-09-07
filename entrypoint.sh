@@ -17,6 +17,12 @@ az extension add -n azure-cli-ml
 # verify machine learning extension is installed correctly 
 az ml -h
 
+# install azure sdk
+pip install azureml-sdk
+
+# install azure sdk ml extras
+pip install azureml-sdk[notebooks,automl,explain]
+
 # install any updated python dependencies defined in OHR400Dashboard Repo
 python3 -m pip install -r ~/Sites/OHR400Dashboard/requirements.txt
 
