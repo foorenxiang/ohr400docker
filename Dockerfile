@@ -25,6 +25,8 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 	&& apt-get -y install wget \
 	&& apt-get -y install curl \
 	&& apt-get -y install vim \
+	&& apt-get -y install gcc \
+	&& apt-get -y install g++ \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& wget https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh -O LFSInstall.sh \
 	&& export DEBIAN_FRONTEND=noninteractive \
